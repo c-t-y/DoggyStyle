@@ -14,15 +14,15 @@ public class PlayerController : MonoBehaviour
 
     public GameObject bulletPrefab;
     public float bulletSpeed;
-    public float fireRate = 1f;
-    public bool allowFire = true;
+    public float fireRate;
+    private bool allowFire;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        allowFire = true;
         rigidbody = GetComponent<Rigidbody>();
-        //Physics.IgnoreCollision(bulletPrefab.GetComponent<Collider>(), GetComponent<Collider>());
     }
 
     // Update is called once per frame
@@ -36,47 +36,102 @@ public class PlayerController : MonoBehaviour
 
 
         //shooting input
-        if (Input.GetKeyDown(KeyCode.UpArrow) && allowFire == true)
+        if (Input.GetKey(KeyCode.UpArrow) && allowFire == true)
         {
-            //StartCoroutine(Shoot("up"));
-            var bulletInstance = Instantiate(bulletPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z + 1), Quaternion.identity);
-            bulletInstance.GetComponent<Rigidbody>().AddForce(Vector3.forward * bulletSpeed);
+
+            Shoot("up");
+            allowFire = false;
+            StartCoroutine(FireCooldown());
 
         }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.DownArrow) && allowFire == true)
         {
-            var bulletInstance = Instantiate(bulletPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z - 1), Quaternion.identity);
-            bulletInstance.GetComponent<Rigidbody>().AddForce(Vector3.back * bulletSpeed);
+            Shoot("down");
+            allowFire = false;
+            StartCoroutine(FireCooldown());
 
         }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow) && allowFire == true)
         {
-            var bulletInstance = Instantiate(bulletPrefab, new Vector3(transform.position.x - 1, transform.position.y, transform.position.z), Quaternion.identity);
-            bulletInstance.GetComponent<Rigidbody>().AddForce(Vector3.left * bulletSpeed);
+            Shoot("left");
+            allowFire = false;
+            StartCoroutine(FireCooldown());
 
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow) && allowFire == true)
         {
-            var bulletInstance = Instantiate(bulletPrefab, new Vector3(transform.position.x + 1, transform.position.y, transform.position.z), Quaternion.identity);
-            bulletInstance.GetComponent<Rigidbody>().AddForce(Vector3.right * bulletSpeed);
+            Shoot("right");
+            allowFire = false;
+            StartCoroutine(FireCooldown());
 
         }
+
 
 
 
         collectedText.text = "Items Collected: " + collectedAmount;
     }
 
+    void Shoot(string direction)
+    {
+        if (direction == "up")
+        {
+
+            var bulletInstance = Instantiate(bulletPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z + 1), Quaternion.identity);
+            bulletInstance.GetComponent<Rigidbody>().AddForce(Vector3.forward * bulletSpeed);
+
+
+        }
+        if (direction == "down")
+        {
+            var bulletInstance = Instantiate(bulletPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z - 1), Quaternion.identity);
+            bulletInstance.GetComponent<Rigidbody>().AddForce(Vector3.back * bulletSpeed);
+        }
+        if (direction == "left")
+        {
+            var bulletInstance = Instantiate(bulletPrefab, new Vector3(transform.position.x - 1, transform.position.y, transform.position.z), Quaternion.identity);
+            bulletInstance.GetComponent<Rigidbody>().AddForce(Vector3.left * bulletSpeed);
+        }
+        if (direction == "right")
+        {
+            var bulletInstance = Instantiate(bulletPrefab, new Vector3(transform.position.x + 1, transform.position.y, transform.position.z), Quaternion.identity);
+            bulletInstance.GetComponent<Rigidbody>().AddForce(Vector3.right * bulletSpeed);
+        }
+    }
+
+    public IEnumerator FireCooldown()
+    {
+        yield return new WaitForSeconds(fireRate);
+        allowFire = true;
+    }
+
+
     //IEnumerator Shoot(string direction)
     //{
-    //    allowFire = false;
     //    if (direction == "up")
     //    {
     //        var bulletInstance = Instantiate(bulletPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z + 1), Quaternion.identity);
     //        bulletInstance.GetComponent<Rigidbody>().AddForce(Vector3.forward * bulletSpeed);
+    //        yield return new WaitForSeconds(1f);
     //    }
-    //    yield return new WaitForSeconds(fireRate);
-    //    allowFire = true;
+    //    if (direction == "down")
+    //    {
+    //        var bulletInstance = Instantiate(bulletPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z - 1), Quaternion.identity);
+    //        bulletInstance.GetComponent<Rigidbody>().AddForce(Vector3.back * bulletSpeed);
+    //        yield return new WaitForSeconds(1f);
+    //    }
+    //    if (direction == "left")
+    //    {
+    //        var bulletInstance = Instantiate(bulletPrefab, new Vector3(transform.position.x - 1, transform.position.y, transform.position.z), Quaternion.identity);
+    //        bulletInstance.GetComponent<Rigidbody>().AddForce(Vector3.left * bulletSpeed);
+    //        yield return new WaitForSeconds(1f);
+    //    }
+    //    if (direction == "right")
+    //    {
+    //        var bulletInstance = Instantiate(bulletPrefab, new Vector3(transform.position.x + 1, transform.position.y, transform.position.z), Quaternion.identity);
+    //        bulletInstance.GetComponent<Rigidbody>().AddForce(Vector3.right * bulletSpeed);
+    //        yield return new WaitForSeconds(1f);
+    //    }
 
     //}
 

@@ -1236,8 +1236,7 @@ MonoBehaviour:
   collectedText: {fileID: 1795419596}
   bulletPrefab: {fileID: 6474816306163324476, guid: 65d6f2a2702ad46a795ce5f2f24af20c, type: 3}
   bulletSpeed: 200
-  fireRate: 0
-  allowFire: 1
+  fireRate: 0.5
 --- !u!54 &1916427148
 Rigidbody:
   m_ObjectHideFlags: 0
