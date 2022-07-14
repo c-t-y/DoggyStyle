@@ -67,8 +67,6 @@ public class PlayerController : MonoBehaviour
         }
 
 
-
-
         collectedText.text = "Items Collected: " + collectedAmount;
     }
 
@@ -104,37 +102,5 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(fireRate);
         allowFire = true;
     }
-
-
-    //IEnumerator Shoot(string direction)
-    //{
-    //    if (direction == "up")
-    //    {
-    //        var bulletInstance = Instantiate(bulletPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z + 1), Quaternion.identity);
-    //        bulletInstance.GetComponent<Rigidbody>().AddForce(Vector3.forward * bulletSpeed);
-    //        yield return new WaitForSeconds(1f);
-    //    }
-    //    if (direction == "down")
-    //    {
-    //        var bulletInstance = Instantiate(bulletPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z - 1), Quaternion.identity);
-    //        bulletInstance.GetComponent<Rigidbody>().AddForce(Vector3.back * bulletSpeed);
-    //        yield return new WaitForSeconds(1f);
-    //    }
-    //    if (direction == "left")
-    //    {
-    //        var bulletInstance = Instantiate(bulletPrefab, new Vector3(transform.position.x - 1, transform.position.y, transform.position.z), Quaternion.identity);
-    //        bulletInstance.GetComponent<Rigidbody>().AddForce(Vector3.left * bulletSpeed);
-    //        yield return new WaitForSeconds(1f);
-    //    }
-    //    if (direction == "right")
-    //    {
-    //        var bulletInstance = Instantiate(bulletPrefab, new Vector3(transform.position.x + 1, transform.position.y, transform.position.z), Quaternion.identity);
-    //        bulletInstance.GetComponent<Rigidbody>().AddForce(Vector3.right * bulletSpeed);
-    //        yield return new WaitForSeconds(1f);
-    //    }
-
-    //}
-
-
 
 }
