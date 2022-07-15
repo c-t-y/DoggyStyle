@@ -21,12 +21,18 @@ public class EnemyController : MonoBehaviour
     public float speed;
     private bool chooseDir = false;
     private Vector3 randomDir;
-    public float health = 10f;
+    public float maxHealth;
+    public float currentHealth;
+
+    public HealthBar healthBar;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
+
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
@@ -88,13 +94,14 @@ public class EnemyController : MonoBehaviour
     {
         transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
     }
-    public void Hit()
+    public void Hit(float damage)
     {
-        if (health > 0)
+        if (currentHealth > 0)
         {
-            health -= 2;
+            currentHealth -= damage;
+            healthBar.SetHealth(currentHealth);
         }
-        else
+        if (currentHealth <= 0)
         {
             Death();
         }
